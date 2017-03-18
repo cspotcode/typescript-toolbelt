@@ -45,4 +45,13 @@ type ImmutableArray<T> = {
 function narrowLiterals<T extends string>(array: Array<T>): Array<T>;
 function narrowLiterals<T extends number>(array: Array<T>): Array<T>;
 function narrowLiterals(array) {return array;}
+
+/**
+ * Declared return type is the same as the passed function `fn`.
+ * However, at runtime, always returns undefined and never invokes `fn`.
+ * Useful for getting the type of an expression without any runtime side-effects.
+ * TypeScript otherwise doesn't have any syntax for getting the inferred type of an expression.
+ */
+function typeOfExpression<T>(fn: (_?: any) => T): T;
+function typeOfExpression() {};
 ```
