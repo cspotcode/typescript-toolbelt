@@ -51,6 +51,10 @@ function narrowLiterals(array) {return array;}
  * However, at runtime, always returns undefined and never invokes `fn`.
  * Useful for getting the type of an expression without any runtime side-effects.
  * TypeScript otherwise doesn't have any syntax for getting the inferred type of an expression.
+ *
+ * Usage:
+ *    const __ignored = typeOfExpression(() => classFactoryFoo('bar'));
+ *    type MyType = typeof __ignored;
  */
 function typeOfExpression<T>(fn: (_?: any) => T): T;
 function typeOfExpression() {};
