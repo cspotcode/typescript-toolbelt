@@ -9,6 +9,16 @@ Helpers &amp; type declarations for TypeScript projects.
  */
 type TODO = any;
 
+/**
+ * Simple object-backed Dictionary interface.  Slightly less verbose than declaring a subscripting signature.
+ */
+interface Dictionary<T> {
+    [key: string]: T;
+}
+interface ImmutableDictionary<T> {
+    readonly [key: string]: T;
+}
+
 /** A JS array except that you can't do anything that would modify its contents. */
 type ImmutableArray<T> = {
     // Readonly versions of a ton of methods and properties from normal arrays.  Only the ones that don't mutate the array.
@@ -25,6 +35,9 @@ type ImmutableArray<T> = {
 /**
  * Narrows the type of array elements to a union of literals.
  * Useful for building a union type from an array of strings or numbers without repetition.
+ * Only necessary when you need the array of strings at runtime *and* you need the union type at compile-time.
+ * Not appropriate when you only want one or the other.
+ * 
  * Sample usage:
  * const arrayOfLiterals = narrowLiterals(['a', 'b', 'c']);
  * type ABCUnion = typeof arrayOfLiterals[0]; // 'a' | 'b' | 'c'
