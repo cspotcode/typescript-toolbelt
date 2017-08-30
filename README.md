@@ -59,3 +59,13 @@ function narrowLiterals(array) {return array;}
 function typeOfExpression<T>(fn: (_?: any) => T): T;
 function typeOfExpression() {};
 ```
+
+/*
+ * Copied from http://ideasintosoftware.com/typescript-advanced-tricks/
+ * Diff<StringUnion, StringUnionToSubtract> is a string literal union of all the values in StringUnion that do not appear in StringUnionToSubtract
+ * Omit<T, KeysToOmit> is type T but without all the properties named by KeysToOmit.
+ * My addition, OmitFromInterface<T, U> is like Omit except it omits the *properties* of the second type, so U is an interface as well.
+ */
+type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T];
+type Omit<T, K extends keyof T> = {[P in Diff<keyof T, K>]: T[P]};
+type OmitInterface<T, U> = Omit<T, keyof U>;
