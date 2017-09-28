@@ -66,6 +66,6 @@ function typeOfExpression() {};
  * My addition, OmitFromInterface<T, U> is like Omit except it omits the *properties* of the second type, so U is an interface as well.
  */
 type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T];
-type Omit<T, K extends keyof T> = {[P in Diff<keyof T, K>]: T[P]};
+type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 type OmitInterface<T, U> = Omit<T, keyof U>;
 ```
