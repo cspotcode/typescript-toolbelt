@@ -61,6 +61,27 @@ function typeOfExpression() {};
 type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T];
 type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 type OmitInterface<T, U> = Omit<T, keyof U>;
+
+/*
+ * Mapped types that are homomorphic will preserve the readonly and optionality attributes of properties.
+ * However, sometimes we want to strip these attributes from a type.  For example, given a Partial<SomeInterface>,
+ * how do we make each property required if we don't have access to SomeInterface?
+ * 
+ * This declaration strips the readonly and optional attributes from an interface.
+ *
+ * https://github.com/Microsoft/TypeScript/issues/13224#issuecomment-269807806
+ */
+type StripPropertyAttributes<T> = {[P in {[P in keyof T]: P }[keyof T]]: T[P]};
+
+// example
+interface Funky {
+    readonly immutable: string;
+    opt?: string;
+}
+const a: StripPropertyAttributes<Funky> = {
+    immutable: '' // error because opt is required
+}
+a.immutable = 'a'; // not error because immutable is no longer readonly
 ```
 
 ## Defunct Stuff
