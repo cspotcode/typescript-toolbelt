@@ -20,17 +20,10 @@ interface ImmutableDictionary<T> {
 }
 
 /** A JS array except that you can't do anything that would modify its contents. */
-type ImmutableArray<T> = {
-    // Readonly versions of a ton of methods and properties from normal arrays.  Only the ones that don't mutate the array.
-    readonly [P in
-        'concat' | 'entries' | 'every' | 'filter' | 'find' | 'findIndex'
-        | 'forEach' | 'indexOf' | 'join' | 'keys' | 'lastIndexOf' | 'length'
-        | 'map' | 'reduce' | 'reduceRight'| 'slice' | 'some' | 'toLocaleString'
-        | 'toString' | 'values']: Array<T>[P];
-} & {
-    // Readonly numeric index
-    readonly [i: number]: T;
-}
+// TS has this built-in!
+const a: ReadonlyArray<number> = [1, 2, 3];
+
+/** Also ReadonlyMap, ReadonlySet, and Readonly */
 
 /**
  * Narrows the type of array elements to a union of literals.
@@ -68,4 +61,21 @@ function typeOfExpression() {};
 type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T];
 type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 type OmitInterface<T, U> = Omit<T, keyof U>;
+```
+
+## Defunct Stuff
+
+```typescript
+// Don't use this; TS has a built-in ReadonlyArray type
+type ImmutableArray<T> = {
+    // Readonly versions of a ton of methods and properties from normal arrays.  Only the ones that don't mutate the array.
+    readonly [P in
+        'concat' | 'entries' | 'every' | 'filter' | 'find' | 'findIndex'
+        | 'forEach' | 'indexOf' | 'join' | 'keys' | 'lastIndexOf' | 'length'
+        | 'map' | 'reduce' | 'reduceRight'| 'slice' | 'some' | 'toLocaleString'
+        | 'toString' | 'values']: Array<T>[P];
+} & {
+    // Readonly numeric index
+    readonly [i: number]: T;
+}
 ```
