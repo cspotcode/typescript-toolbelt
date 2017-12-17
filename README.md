@@ -84,6 +84,23 @@ const a: Plain = { // error because opt is required
     immutable: ''
 };
 a.immutable = 'a'; // not error because immutable is writable
+
+/**
+ * No-op class decorator that ensures the class's constructor implements a given interface.
+ * Normal class `implements` clauses only assert that instances implement the interface,
+ * not the constructor function itself.
+ */
+function AssertConstructorImplements<T>() { return function(ctor: T) {}; }
+
+// Example:
+interface FooCtor {
+    new(a: number): Foo;
+    staticMethod(b: string): void;
+}
+@AssertConstructorImplements<FooCtor>
+class FooImplementation { // 2 errors because static method is missing and constructor signatures are incompatible
+    constructor(public c: boolean) {}
+}
 ```
 
 ## Defunct Stuff
