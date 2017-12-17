@@ -19,7 +19,7 @@ interface ImmutableDictionary<T> {
     readonly [key: string]: T;
 }
 
-/** A JS array except that you can't do anything that would modify its contents. */
+/* A JS array except that you can't do anything that would modify its contents. */
 // TS has this built-in!
 const a: ReadonlyArray<number> = [1, 2, 3];
 
@@ -62,7 +62,7 @@ type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: nev
 type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 type OmitInterface<T, U> = Omit<T, keyof U>;
 
-/*
+/**
  * This type strips the readonly and optional modifiers from all properties of an interface.
  *
  * Mapped types that are homomorphic (structure-preserving) will preserve the readonly and optionality attributes of properties.
@@ -71,36 +71,38 @@ type OmitInterface<T, U> = Omit<T, keyof U>;
  * how do we make each property required?
  *
  * https://github.com/Microsoft/TypeScript/issues/13224#issuecomment-269807806
+ *
+ * EXAMPLE:
+ *
+ * interface Funky {
+ *     readonly immutable: string;
+ *     opt?: string;
+ * }
+ * type Plain = StripModifiers<Funky>;
+ * const a: Plain = { // error because opt is required
+ *     immutable: ''
+ * };
+ * a.immutable = 'a'; // not error because immutable is writable
  */
 type StripModifiers<T> = {[P in {[P in keyof T]: P }[keyof T]]: T[P]};
 
-// example
-interface Funky {
-    readonly immutable: string;
-    opt?: string;
-}
-type Plain = StripModifiers<Funky>;
-const a: Plain = { // error because opt is required
-    immutable: ''
-};
-a.immutable = 'a'; // not error because immutable is writable
-
 /**
  * No-op class decorator that ensures the class's constructor implements a given interface.
- * Normal class `implements` clauses only assert that instances implement the interface,
- * not the constructor function itself.
+ * A normal `implements` clause only asserts that instances implement the interface,
+ * whereas this decorator makes an assertion about the constructor itself. 
+ *
+ * EXAMPLE:
+ *
+ * @AssertConstructorImplements<FooCtor>
+ * class FooImplementation { // 2 errors because staticMethod is missing and constructor signatures are incompatible
+ *     constructor(public c: boolean) {}
+ * }
+ * interface FooCtor {
+ *     new(a: number): Foo;
+ *     staticMethod(b: string): void;
+ * }
  */
 function AssertConstructorImplements<T>() { return function(ctor: T) {}; }
-
-// Example:
-interface FooCtor {
-    new(a: number): Foo;
-    staticMethod(b: string): void;
-}
-@AssertConstructorImplements<FooCtor>
-class FooImplementation { // 2 errors because static method is missing and constructor signatures are incompatible
-    constructor(public c: boolean) {}
-}
 ```
 
 ## Defunct Stuff
