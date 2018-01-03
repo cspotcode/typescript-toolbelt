@@ -103,6 +103,25 @@ type StripModifiers<T> = {[P in {[P in keyof T]: P }[keyof T]]: T[P]};
  * }
  */
 function AssertConstructorImplements<T>() { return function(ctor: T) {}; }
+
+/**
+ * Write type annotations inline within nested object or array literals.
+ * Use this to enable better Intellisense and write self-documenting code.
+ * 
+ * This is better than TS type assertions (e.g. `<MyInterface>{}`) because
+ * type assertions allow type narrowing, which suppresses certain type errors.
+ *
+ * For example, in the following situation, Intellisense is useless without an explicit
+ * type annotation enabled via this function:
+ * 
+ *     const a: Dictionary<any> = {
+ *         first: someValue,
+ *         second: someOtherValue,
+ *         windowShim: T<Partial<Window>>({ // We want code completion for properties of the window object
+ *             // <- intellisense shows us setTimeout, document, alert, btoa, location, onblur, etc.
+ *         })
+ */
+function T<V>(value: V): V { return value }
 ```
 
 ## Defunct Stuff
