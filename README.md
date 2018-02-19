@@ -87,6 +87,22 @@ type OmitInterface<T, U> = Omit<T, keyof U>;
 type StripModifiers<T> = {[P in {[P in keyof T]: P }[keyof T]]: T[P]};
 
 /**
+ * Picks only the properties of a certain type.
+ * For example, you can filter an interface to include only properties that are numbers.
+ * Requires TS 2.8
+ */
+type PickOfType<Object, PropertyExtends> = {
+    [FilteredProp in {[P in keyof Object]: Object[P] extends PropertyExtends ? P : never}[keyof Object]]: Object[FilteredProp];
+}
+/**
+ * Opposite of PickOfType
+ * Excludes properties that extend a type; includes all others.
+ */
+type PickNotOfType<Object, PropertyDoesNotExtend> = {
+    [FilteredProp in {[P in keyof Object]: Object[P] extends PropertyExtends ? never : P}[keyof Object]]: Object[FilteredProp];
+}
+
+/**
  * No-op class decorator that ensures the class's constructor implements a given interface.
  * A normal `implements` clause only asserts that instances implement the interface,
  * whereas this decorator makes an assertion about the constructor itself. 
