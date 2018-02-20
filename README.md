@@ -5,7 +5,7 @@ Helpers &amp; type declarations for TypeScript projects.
 /**
  * When you're too lazy or rushed to use proper type declarations, use TODO
  * This is different from `any` because you *can* apply more appropriate typings;
- * you just chose not to due to time constraints.
+ * you just choose not to due to time constraints.
  */
 type TODO = any;
 
