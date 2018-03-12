@@ -63,30 +63,6 @@ type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 type OmitInterface<T, U> = Omit<T, keyof U>;
 
 /**
- * This type strips the readonly and optional modifiers from all properties of an interface.
- *
- * Mapped types that are homomorphic (structure-preserving) will preserve the readonly and optionality attributes of properties.
- * However, sometimes we want to strip these attributes from a type.  Mapped types make it easy to add readonly or optionality modifiers
- * (Readonly<> and Partial<>) but not to remove them.  For example, given an interface like {a?: string; b?: number}
- * how do we make each property required?
- *
- * https://github.com/Microsoft/TypeScript/issues/13224#issuecomment-269807806
- *
- * EXAMPLE:
- *
- * interface Funky {
- *     readonly immutable: string;
- *     opt?: string;
- * }
- * type Plain = StripModifiers<Funky>;
- * const a: Plain = { // error because opt is required
- *     immutable: ''
- * };
- * a.immutable = 'a'; // not error because immutable is writable
- */
-type StripModifiers<T> = {[P in {[P in keyof T]: P }[keyof T]]: T[P]};
-
-/**
  * Picks only the properties of a certain type.
  * For example, you can filter an interface to include only properties that are numbers.
  * Requires TS 2.8
@@ -178,4 +154,32 @@ type ImmutableArray<T> = {
     // Readonly numeric index
     readonly [i: number]: T;
 }
+
+// Modifier removal is natively supported in TS2.8!
+// Prefix the modifiers with a minus sign within mapped types to remove them
+// There's also a built-in Required<> generic that does the opposite of Partial<>
+/**
+ * This type strips the readonly and optional modifiers from all properties of an interface.
+ *
+ * Mapped types that are homomorphic (structure-preserving) will preserve the readonly and optionality attributes of properties.
+ * However, sometimes we want to strip these attributes from a type.  Mapped types make it easy to add readonly or optionality modifiers
+ * (Readonly<> and Partial<>) but not to remove them.  For example, given an interface like {a?: string; b?: number}
+ * how do we make each property required?
+ *
+ * https://github.com/Microsoft/TypeScript/issues/13224#issuecomment-269807806
+ *
+ * EXAMPLE:
+ *
+ * interface Funky {
+ *     readonly immutable: string;
+ *     opt?: string;
+ * }
+ * type Plain = StripModifiers<Funky>;
+ * const a: Plain = { // error because opt is required
+ *     immutable: ''
+ * };
+ * a.immutable = 'a'; // not error because immutable is writable
+ */
+type StripModifiers<T> = {[P in {[P in keyof T]: P }[keyof T]]: T[P]};
+
 ```
