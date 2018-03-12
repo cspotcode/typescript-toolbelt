@@ -39,6 +39,7 @@ function narrowLiterals<T extends string>(array: Array<T>): Array<T>;
 function narrowLiterals<T extends number>(array: Array<T>): Array<T>;
 function narrowLiterals(array) {return array;}
 
+// UPDATE: partially (completely?) supplanted by inference in conditional types, added in TS2.8
 /**
  * Declared return type is the same as the passed function `fn`.
  * However, at runtime, always returns undefined and never invokes `fn`.
