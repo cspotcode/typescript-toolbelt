@@ -1,3 +1,20 @@
+// Thanks to @mkulke for this: https://github.com/Microsoft/TypeScript/issues/13923#issuecomment-373836516
+
+type DeepReadonlyObject<T> = {
+  readonly [P in keyof T]: DeepReadonly<T[P]>;
+};
+
+interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
+
+type DeepReadonly<T> =
+  T extends ReadonlyArray<any>
+  ? DeepReadonlyArray<T[number]>
+  : T extends object
+  ? DeepReadonlyObject<T>
+  : T;
+
+///////////////////
+
 export type primitive = string | number | boolean | undefined | null
 
 type DeepMutable<T> = T extends primitive ? T : {
