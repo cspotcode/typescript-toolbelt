@@ -145,6 +145,10 @@ type AnyFunction<Returns = any, A = any, B = any, C = any, D = any, E = any, Res
 type Constructor<Instance = {}, A = any, B = any, C = any, D = any, E = any, Rest = any> = new (a: A, b: B, c: D, d: D, ...args: Rest[]) => Instance;
 ```
 
+## TODO
+
+* add DeepReadonly, DeepMutable, DeepPartial, DeepRequired, DeepNonNullable, DeepNullable (any others?)
+
 ## Defunct Stuff
 
 ```typescript
