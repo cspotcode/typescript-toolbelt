@@ -12,12 +12,9 @@ type TODO = any;
 /**
  * Simple object-backed Dictionary interface.  Slightly less verbose than declaring a subscripting signature.
  */
-interface Dictionary<T> {
-    [key: string]: T;
-}
-interface ImmutableDictionary<T> {
-    readonly [key: string]: T;
-}
+interface Dictionary<T> = Record<string, T>;
+
+interface ImmutableDictionary<T> = Readonly<Record<string, T>>;
 
 /* A JS array except that you can't do anything that would modify its contents. */
 // TS has this built-in!
@@ -44,7 +41,7 @@ function narrowLiterals(array) {return array;}
  * Declared return type is the same as the passed function `fn`.
  * However, at runtime, always returns undefined and never invokes `fn`.
  * Useful for getting the type of an expression without any runtime side-effects.
- * TypeScript otherwise doesn't have any syntax for getting the inferred type of an expression.
+ * TypeScript otherwise doesn't have any syntax for extracting the inferred type of an expression.
  *
  * Usage:
  *    const __ignored = typeOfExpression(() => classFactoryFoo('bar'));
@@ -55,12 +52,10 @@ function typeOfExpression() {};
 
 /*
  * Copied from http://ideasintosoftware.com/typescript-advanced-tricks/
- * Diff<StringUnion, StringUnionToSubtract> is a string literal union of all the values in StringUnion that do not appear in StringUnionToSubtract
  * Omit<T, KeysToOmit> is type T but without all the properties named by KeysToOmit.
  * My addition, OmitFromInterface<T, U> is like Omit except it omits the *properties* of the second type, so U is an interface as well.
  */
-type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T];
-type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 type OmitInterface<T, U> = Omit<T, keyof U>;
 
 /**
@@ -86,7 +81,7 @@ type PickNotOfType<Object, PropertyDoesNotExtend> = {
  *
  * EXAMPLE:
  *
- * @AssertConstructorImplements<FooCtor>
+ * @AssertImplements<FooCtor>
  * class FooImplementation { // 2 errors because staticMethod is missing and constructor signatures are incompatible
  *     constructor(public c: boolean) {}
  * }
@@ -138,6 +133,16 @@ type NoneInUnionMatch<Union, Match, ResultIfNoneMatch, ResultIfSomeDoMatch> = (
 type SomeInUnionMatch<Union, Match, ResultIfSomeMatch, ResultIfNoneMatch> = NoneInUnionMatch<Union, Match, ResultIfNoneMatch, ResultIfSomeMatch>;
 /** Conditional that tests if at least one type in a union *does not* extend a type */
 type SomeInUnionDoNotMatch<Union, Match, ResultIfSomeDoNotMatch, ResultIfAllMatch> = AllInUnionMatch<Union, Match, ResultIfAllMatch, ResultIfSomeDoNotMatch>;
+
+/**
+ * When you require something that's invocable.
+ * Optionally require a specific return type and/or acceptance of certain argument types,
+ * but at that point you should probably write out the function signature directly.
+ */
+type AnyFunction<Returns = any, A = any, B = any, C = any, D = any, E = any, Rest = any> = (a: A, b: B, c: C, d: D, ...args: Rest[]) => Returns;
+
+/** When you require a constructor, e.g. for mixins */
+type Constructor<Instance = {}, A = any, B = any, C = any, D = any, E = any, Rest = any> = new (a: A, b: B, c: D, d: D, ...args: Rest[]) => Instance;
 ```
 
 ## Defunct Stuff
