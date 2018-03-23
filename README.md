@@ -143,6 +143,26 @@ type AnyFunction<Returns = any, A = any, B = any, C = any, D = any, E = any, Res
 
 /** When you require a constructor, e.g. for mixins */
 type Constructor<Instance = {}, A = any, B = any, C = any, D = any, E = any, Rest = any> = new (a: A, b: B, c: D, d: D, ...args: Rest[]) => Instance;
+
+/**
+ * Extract constructor type of a mixin.
+ * Usage: type FooConstructor = MixinConstructorType<typeof Foo>;
+ */
+type MixinConstructorType<MixinFunction, BaseClass = 'auto'> = BaseClass extends 'auto' ? (
+    MixinFunction extends (Base: infer B) => infer C ? C : never
+) : (
+    MixinFunction extends (Base: BaseClass) => infer C ? C : never
+);
+
+/**
+ * Extract instance type of a mixin
+ * Usage: type Foo = MixinType<typeof Foo>;
+ */
+type MixinType<MixinFunction, BaseClass = 'auto'> =
+    MixinConstructorType<MixinFunction, BaseClass> extends infer R
+    ? R extends Constructor
+    ? InstanceType<R>
+    : never : never;
 ```
 
 ## TODO
