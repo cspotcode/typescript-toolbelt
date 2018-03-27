@@ -7,6 +7,8 @@
  * 
  * For this very specific scenario, you have to do a weird song-and-dance to keep the type-checker happy.
  * Fortunately it's simple to write once you know the trick.
+ 
+ * Related discussion: https://github.com/Microsoft/TypeScript/issues/22431#issuecomment-376550388
  */
 
 class Foo {
