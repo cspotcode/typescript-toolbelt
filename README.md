@@ -163,6 +163,18 @@ type MixinType<MixinFunction, BaseClass = 'auto'> =
     ? R extends Constructor
     ? InstanceType<R>
     : never : never;
+
+/** Sometimes you want to write a class with a readonly property (for the sake of public API) but you (rarely) need to
+ * privately mutate that property.
+ * Use this trick:
+ *     Write(this).normallyReadonlyProp = newValue;
+ *     // or, if you really want to avoid the function call:
+ *     (this as Write<this>).normallyReadonlyProp = newValue;
+ */
+export type Write<T, K extends keyof T = keyof T> = {-readonly [P in K]: T[K]};
+export function Write<T>(t: T) {
+    return t as {-readonly [K in keyof T]: T[K]};
+}
 ```
 
 ## TODO
