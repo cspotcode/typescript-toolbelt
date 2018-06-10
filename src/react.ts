@@ -1,4 +1,12 @@
 import {ComponentClass, Component} from 'react';
+export {
+    PropsType,
+    PropsTypeOfFactory,
+    PropsTypeOfClass,
+    StateType,
+    StateTypeOfFactory,
+    StateTypeOfClass
+};
 
 /** Extract Props type of a Component (instance) type */
 type PropsType<C extends Component<any>> = C extends Component<infer P> ? P : never;

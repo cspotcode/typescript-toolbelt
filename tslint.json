@@ -1,0 +1,15 @@
+{
+    "defaultSeverity": "error",
+
+    // Recommended tslint defaults are specified here
+
+    // "extends": [
+    //     "tslint:recommended"
+    // ],
+
+    "jsRules": {},
+    "rules": {
+        "expect": true
+    },
+    "rulesDirectory": ["node_modules/dtslint/bin/rules"]
+}

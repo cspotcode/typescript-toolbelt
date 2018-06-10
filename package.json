@@ -6,12 +6,36 @@
   "version": "0.0.0",
   "main": "out/main.js",
   "types": "out/main.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cspotcode/typescript-toolbelt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cspotcode/typescript-toolbelt/issues"
+  },
   "dependencies": {
+    "lodash": "^4.17.10",
     "tslib": "^1.9.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.109",
+    "@types/node": "^10.3.2",
     "@types/react": "^16.3.17",
     "dtslint": "^0.3.0",
+    "ts-node": "^6.1.0",
+    "tslint": "^5.10.0",
+    "tslint-language-service": "^0.9.9",
     "typescript": "^2.9.1"
-  }
+  },
+  "files": [
+    ".editorconfig",
+    "global.d.ts",
+    "namespace.d.ts",
+    "out/*.js",
+    "out/*.map",
+    "out/*.ts",
+    "react.d.ts",
+    "src/*.ts",
+    "tsconfig.json"
+  ]
 }
