@@ -10,7 +10,8 @@ export {
     narrowLiterals,
     typeOfExpression,
     T,
-    TI
+    TI,
+    Writable
 };
 
 /**

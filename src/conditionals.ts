@@ -4,10 +4,10 @@ import { KeyOf } from "./core";
 export {
     IfKeyIsOptional,
     IfKeysOverlap,
-    IfAllInUnionMatch,
-    IfNoneInUnionMatch,
-    IfSomeInUnionMatch,
-    IfSomeInUnionDoNotMatch,
+    IfAllInUnionExtend,
+    IfNoneInUnionExtend,
+    IfSomeInUnionExtend,
+    IfSomeInUnionDoNotExtend,
 }
 //#}
 
@@ -39,16 +39,16 @@ type IfKeysOverlap<T extends KeyOf, U extends KeyOf, TRUE = true, FALSE = false>
  */
 
 /** Conditional that tests if all types in a union extend a type */
-type IfAllInUnionMatch<Union, Match, ResultIfAllMatch, ResultIfSomeDoNotMatch> = (
+type IfAllInUnionExtend<Union, Match, ResultIfAllMatch, ResultIfSomeDoNotMatch> = (
     Union extends Match ? never : {__fail_marker: any}
 ) extends never ? ResultIfAllMatch : ResultIfSomeDoNotMatch;
 
 /** Conditional that tests if all types in a union *do not* extend a type */
-type IfNoneInUnionMatch<Union, Match, ResultIfNoneMatch, ResultIfSomeDoMatch> = (
+type IfNoneInUnionExtend<Union, Match, ResultIfNoneMatch, ResultIfSomeDoMatch> = (
     Union extends Match ? {__fail_marker: any} : never
 ) extends never ? ResultIfNoneMatch : ResultIfSomeDoMatch;
 
 /** Conditional that tests if at least one type in a union extends a type */
-type IfSomeInUnionMatch<Union, Match, ResultIfSomeMatch, ResultIfNoneMatch> = NoneInUnionMatch<Union, Match, ResultIfNoneMatch, ResultIfSomeMatch>;
+type IfSomeInUnionExtend<Union, Match, ResultIfSomeMatch, ResultIfNoneMatch> = IfNoneInUnionExtend<Union, Match, ResultIfNoneMatch, ResultIfSomeMatch>;
 /** Conditional that tests if at least one type in a union *does not* extend a type */
-type IfSomeInUnionDoNotMatch<Union, Match, ResultIfSomeDoNotMatch, ResultIfAllMatch> = AllInUnionMatch<Union, Match, ResultIfAllMatch, ResultIfSomeDoNotMatch>;
+type IfSomeInUnionDoNotExtend<Union, Match, ResultIfSomeDoNotMatch, ResultIfAllMatch> = IfAllInUnionExtend<Union, Match, ResultIfAllMatch, ResultIfSomeDoNotMatch>;
