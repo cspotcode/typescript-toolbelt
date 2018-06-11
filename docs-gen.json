@@ -1,0 +1,9 @@
+{
+    "entryFile": "src/main.ts",
+    "project": ".",
+    "output": "docs",
+    "exclude": [
+        "src/__test__",
+        "src/__example__"
+    ]
+}
