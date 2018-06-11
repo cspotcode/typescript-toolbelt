@@ -12,10 +12,6 @@ export * from './classes-and-mixins-values';
  */
 type Constructor<I = {}> = new (...args: Array<any>) => I;
 
-// TODO this leaks to global scope when in globals or namespace mode
-declare const Auto: unique symbol;
-type Auto = typeof Auto;
-
 /**
  * Extract constructor type of a mixin.
  * Usage: type FooConstructor = MixinConstructorType<typeof Foo>;
@@ -30,7 +26,7 @@ type MixinConstructorType<MixinFunction, BaseClass = undefined> = BaseClass exte
  * Extract instance type of a mixin
  * Usage: type Foo = MixinType<typeof Foo>;
  */
-type MixinType<MixinFunction, BaseClass = Auto> =
+type MixinType<MixinFunction, BaseClass = undefined> =
     MixinConstructorType<MixinFunction, BaseClass> extends infer R
     ? R extends Constructor
     ? InstanceType<R>
