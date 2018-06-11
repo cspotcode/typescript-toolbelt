@@ -54,10 +54,10 @@ TypeScript already includes a bunch of type declarations you might not be aware 
 ```typescript
 ArrayLike<T>
 
-Partial
-Required
+Partial<T>
+Required<T>
 
-Record
+Record<K, T>
 
 Readonly<T>
 ReadonlyArray<T>
@@ -67,7 +67,7 @@ ReadonlySet<V>
 Extract<T, U>
 Exclude<T, U>
 
-NonNullable
+NonNullable<T>
 
 ReturnType<F>
 InstanceType<C>
