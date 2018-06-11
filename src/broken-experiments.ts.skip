@@ -1,3 +1,8 @@
+
+/** When you require a constructor, e.g. for mixins */
+type Constructor<Instance = {}, A = any, B = any, C = any, D = any, E = any, Rest = any> = new (a?: A, b?: B, c?: D, d?: D, ...args: Rest[]) => Instance;
+// MIXINS DO NOT LIKE THIS!  you're supposed to do ...rest: any[] without any other args
+
 // Thanks to @mkulke for this: https://github.com/Microsoft/TypeScript/issues/13923#issuecomment-373836516
 
 type DeepReadonlyObject<T> = {
@@ -47,23 +52,6 @@ export type DeepReadonlyObject<T> = {
   readonly [P in keyof T]: DeepReadonly<T[P]>;
 }
 
-export type A = DeepMutable<ReadonlyArray<'hello'>>;
-const a = null as any as A;
-
-
-/** Optional chaining operator semantics */
-function OCO(value, prop1, prop2, prop3, prop4) { 
-    if(value == null) return undefined; 
-    const value1 = value[prop1]; 
-    if(value1 == null || prop2 == null) return undefined; 
-    const value2 = value1[prop2]; 
-    if(value2 == null || prop3 == null) return undefined; 
-    const value3 = value2[prop3]; 
-    if(value3 == null || prop4 == null) return undefined; 
-    const value4 = value3[prop4]; 
-    return value4; 
-}
-
 export interface ObjectBuilder<T> {
     value: {[K in keyof T]: T[K]};
     <K extends string, V>(key: K, value: V): ObjectBuilder<ReplaceProps<T, {[Key in K]: V}>>;
@@ -78,18 +66,3 @@ function buildObject<T extends object>(value: T = {}): ObjectBuilder<T> {
     return builder as any;
 }
 
-
-/**
- * Map a type, replacing the `[x: string]: any` with `[x: string]: U`
- * JS typechecking automatically adds a string index signature to object literals.
- * I haven't devised a way to strip the string index signature, but we can at least
- * customize it.
- */
-export type ReplaceStringIndex<T, U> = {
-    [K in keyof T]:
-    K extends string ? string extends K
-        // K is string and not a string literal; change its value
-        ? U
-        // otherwise leave this property untouched
-        : K : K;
-}

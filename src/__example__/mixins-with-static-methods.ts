@@ -1,3 +1,5 @@
+import { Constructor } from "../classes-and-mixins";
+
 /*
  * Scenario:
  * You want to write a mixin that can only extend super-classes conforming to or extending a base class Foo.

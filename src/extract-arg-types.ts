@@ -1,3 +1,16 @@
+//#if(data.EXPORT) {
+export {
+    Argument1Type,
+    Argument2Type,
+    Argument3Type,
+    Argument4Type,
+    ConstructorArgument1Type,
+    ConstructorArgument2Type,
+    ConstructorArgument3Type,
+    ConstructorArgument4Type
+};
+//#}
+
 // These two are already built-in:
 // ReturnType: extracts the return type of a function.
 // InstanceType: extracts the instance type of a class.
