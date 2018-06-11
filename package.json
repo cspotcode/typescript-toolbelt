@@ -1,6 +1,6 @@
 {
   "name": "typescript-toolbelt",
-  "description": "Helpers & type declarations for TypeScript projects.",
+  "description": "Helpers & utility types for TypeScript projects.",
   "author": "Andrew Bradley <cspotcode@gmail.com>",
   "license": "MIT",
   "version": "0.0.1",

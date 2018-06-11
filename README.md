@@ -1,6 +1,6 @@
 # typescript-toolbelt
 
-Helpers &amp; type declarations for TypeScript projects.
+Helpers &amp; utility types for TypeScript projects.
 
 ## Usage
 
