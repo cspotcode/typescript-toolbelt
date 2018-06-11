@@ -18,8 +18,9 @@ export {
  * Not appropriate when you only want one or the other.
  * 
  * Sample usage:
- * const arrayOfLiterals = narrowLiterals(['a', 'b', 'c']);
- * type ABCUnion = typeof arrayOfLiterals[0]; // 'a' | 'b' | 'c'
+ * 
+ *     const arrayOfLiterals = narrowLiterals(['a', 'b', 'c']);
+ *     type ABCUnion = typeof arrayOfLiterals[0]; // 'a' | 'b' | 'c'
  */
 function narrowLiterals<T extends string>(array: Array<T>): Array<T>;
 /**
@@ -29,8 +30,9 @@ function narrowLiterals<T extends string>(array: Array<T>): Array<T>;
  * Not appropriate when you only want one or the other.
  * 
  * Sample usage:
- * const arrayOfLiterals = narrowLiterals(['a', 'b', 'c']);
- * type ABCUnion = typeof arrayOfLiterals[0]; // 'a' | 'b' | 'c'
+ * 
+ *     const arrayOfLiterals = narrowLiterals(['a', 'b', 'c']);
+ *     type ABCUnion = typeof arrayOfLiterals[0]; // 'a' | 'b' | 'c'
  */
 function narrowLiterals<T extends number>(array: Array<T>): Array<T>;
 function narrowLiterals(array: Array<number | string>) {return array;}
@@ -47,6 +49,7 @@ function narrowLiterals(array: Array<number | string>) {return array;}
  * so this trick may still be necessary in certain situations.
  *
  * Usage:
+ * 
  *    const __ignored = typeOfExpression(() => classFactoryFoo('bar'));
  *    type MyType = typeof __ignored;
  */
@@ -75,13 +78,13 @@ function T<V>(value: V): V { return value }
 /**
  * Short for "Type Inferred"
  * Write a type requirement inline within nested object or array literals, but allow inference to
- * narrow the type.
+ * narrow the type even further.
  * Use this to enable better Intellisense and write self-documenting code.
  * 
  * This is better than TS type assertions (e.g. `<MyInterface>{}`) because
  * type assertions allow type narrowing, which suppresses certain type errors.
  * 
- * NOTE: usage requires an extra set of empty parentheses.  This is a generics trick.
+ * *NOTE: usage requires an extra set of empty parentheses.  This is a generics trick.*
  *
  * For example, in the following situation, Intellisense is useless without an explicit
  * type annotation enabled via this function:

@@ -11,6 +11,14 @@ function main() {
     # Test
     exec { ./node_modules/.bin/tslint --project . }
     exec { ./node_modules/.bin/mocha -r ts-node/register  ./src/__test__/main.spec.ts }
+
+    # Generate docs
+    # NOTE this one does not support TS 2.8 or 2.9
+    # exec { ./node_modules/.bin/typedoc --project . --out docs }
+    # NOTE this one requires a pure-JSON tsconfig
+    # exec { ./node_modules/.bin/ts-docs-gen --config ./docs-gen.json }
+    # NOTE this one is broken on windows and emits ugly output
+    # exec { ./node_modules/.bin/tygen generate . --out docs --with @tygen/html }
 }
 function exec($block) {
     & $block

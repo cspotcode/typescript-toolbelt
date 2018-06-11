@@ -39,10 +39,13 @@ import { narrowLiterals } from 'typescript-toolbelt';
 const foo = narrowLiterals(['a', 'b', 'c']);
 ```
 
+React-specific helpers should be imported from `typescript-toolbelt/react';`
+These can't be loaded by default because they have a peer dependency on `@types/react`.
+
 ## Docs
 
 Until I get around to generating a website from the documentation, use tab-complete in your editor to see the list
-of helpers and flip through their documentation.
+of helpers and flip through their documentation.  Or read the source.
 
 ## Things already bundled in TypeScript
 
