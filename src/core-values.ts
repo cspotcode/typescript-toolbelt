@@ -1,5 +1,3 @@
-import { Writable } from './core';
-
 /*
  * Anything with a value (not merely a type)
  * For example, identity or no-op helper functions.
@@ -10,8 +8,7 @@ export {
     narrowLiterals,
     typeOfExpression,
     T,
-    TI,
-    Writable
+    TI
 };
 
 /**
@@ -99,20 +96,3 @@ function T<V>(value: V): V { return value }
 function TI<V>() {
     return T as <V2 extends V>(v: V2) => V2;
 }
-
-/**
- * Sometimes you want to write a class with a readonly property (for the sake of public API)
- * but you (rarely) need to privately mutate that property.
- * Use this trick:
- * 
- *     Writable(this).normallyReadonlyProp = newValue;
- *     // or, if you really want to avoid the function call:
- *     (this as Writable<this>).normallyReadonlyProp = newValue;
- * 
- * Aliased as `Mutable` because that sounds more like the counterpart to Immutable, a term
- * preferred in certain programming circles.
- */
-function Writable<T>(t: T) {
-    return t as Writable<T>;
-}
-// NOTE keep JSDoc in sync with type declaration

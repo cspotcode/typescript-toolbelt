@@ -2,7 +2,7 @@
 export {
     TODO,
     Dictionary,
-    ImmutableDictionary,
+    ReadonlyDictionary,
     KeyOf,
     Omit,
     PickOfType,
@@ -25,7 +25,7 @@ type TODO = any;
  */
 type Dictionary<T> = Record<string, T>;
 
-type ImmutableDictionary<T> = Readonly<Record<string, T>>;
+type ReadonlyDictionary<T> = Readonly<Record<string, T>>;
 
 /**
  * Backwards-compatible widest type returned by `keyof`
@@ -76,4 +76,24 @@ type AnyFunction<Returns = any, A = any, B = any, C = any, D = any, E = any, Res
  * preferred in certain programming circles.
  */
 type Writable<T, K extends keyof T = keyof T> = {-readonly [L in K]: T[L]};
-// NOTE keep JSDoc in sync with type declaration
+
+// Breaking our rule and putting a value declaration here because it needs to be kept alongside
+// the type of the same name
+//# if(data.EXPORT) {
+
+/**
+ * Sometimes you want to write a class with a readonly property (for the sake of public API)
+ * but you (rarely) need to privately mutate that property.
+ * Use this trick:
+ * 
+ *     Writable(this).normallyReadonlyProp = newValue;
+ *     // or, if you really want to avoid the function call:
+ *     (this as Writable<this>).normallyReadonlyProp = newValue;
+ * 
+ * Aliased as `Mutable` because that sounds more like the counterpart to Immutable, a term
+ * preferred in certain programming circles.
+ */
+function Writable<T>(t: T) {
+    return t as Writable<T>;
+}
+//#}

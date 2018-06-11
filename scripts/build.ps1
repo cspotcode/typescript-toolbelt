@@ -1,18 +1,24 @@
 #!/usr/bin/env pwsh
 $ErrorActionPreference = 'Stop'
-try {
-    pushd "$PSScriptRoot/.."
-
+function main() {
     # Clean
-    rm -r "./out"
+    if(test-path out) {rm -r "./out"}
 
     # Build
-    ./node_modules/.bin/tsc --project .
-    ./node_modules/.bin/ts-node --transpile-only ./scripts/preprocess.ts
+    exec { ./node_modules/.bin/tsc --project . }
+    exec { ./node_modules/.bin/ts-node --transpile-only ./scripts/preprocess.ts }
 
     # Test
-    ./node_modules/.bin/tslint --project .
-
+    exec { ./node_modules/.bin/tslint --project . }
+    exec { ./node_modules/.bin/mocha -r ts-node/register  ./src/__test__/main.spec.ts }
+}
+function exec($block) {
+    & $block
+    if($LASTEXITCODE -ne 0) { throw "Non-zero exit code $LASTEXITCODE" }
+}
+try {
+    pushd "$PSScriptRoot/.."
+    main
 } finally {
     popd
 }
