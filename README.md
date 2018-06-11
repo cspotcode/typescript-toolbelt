@@ -18,7 +18,31 @@ To put type helpers into the global scope:
 ]
 ```
 
+To expose type helpers as a global `TT` namespace, reference `typescript-toolbelt/namespace`:
 
+```typescript
+/// <reference types="typescript-toolbelt/namespace" />
+```
+
+...or put it in your tsconfig as shown above.
+
+A few helpers require a runtime component.  This will be an identity or no-op function which
+should be removed or inlined by Uglify or the VM.
+These must be imported because it would be irresponsible to create them in global scope.
+
+Fortunately, if you're using a supported editor, you can reference them like normal and the
+language service will offer to write the import statement for you.
+
+```typescript
+import { narrowLiterals } from 'typescript-toolbelt';
+
+const foo = narrowLiterals(['a', 'b', 'c']);
+```
+
+## Docs
+
+Until I get around to generating a website from the documentation, use tab-complete in your editor to see the list
+of helpers and flip through their documentation.
 
 ## Things already bundled in TypeScript
 
