@@ -4,6 +4,7 @@ export {
     Dictionary,
     ReadonlyDictionary,
     KeyOf,
+    StringKeyOf,
     Omit,
     PickOfType,
     OmitOfType,
@@ -33,6 +34,11 @@ type ReadonlyDictionary<T> = Readonly<Record<string, T>>;
  * previously it was limited to `string`
  */
 type KeyOf = keyof any;
+
+/**
+ * When you want to use `keyof T` but you know the keys are all strings.
+ */
+type StringKeyOf<T> = Extract<keyof T, string>;
 
 /*
  * Mapped type of T with all K keys omitted.
