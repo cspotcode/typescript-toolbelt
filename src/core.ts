@@ -9,7 +9,8 @@ export {
     PickOfType,
     OmitOfType,
     Writable,
-    Writable as Mutable
+    Writable as Mutable,
+    MapKeys
 }
 export * from './core-values';
 //#}
@@ -103,3 +104,15 @@ function Writable<T>(t: T) {
     return t as Writable<T>;
 }
 //#}
+
+/**
+ * Map all keys of a type verbatim.  This preserves all keys / properties, strips
+ * invocation signatures, and merges intersection types.
+ * 
+ * It's common to build an intersection of mapped types.  The resulting `} & {` syntax in
+ * tooltips makes them noisier and harder to read.
+ * Mapping the result merges all intersected mapped types into a single interface.
+ */
+type MapKeys<T> = {
+    [K in keyof T]: T[K];
+}
