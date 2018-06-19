@@ -3,7 +3,7 @@
   "description": "Helpers & utility types for TypeScript projects.",
   "author": "Andrew Bradley <cspotcode@gmail.com>",
   "license": "MIT",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "out/main.js",
   "types": "out/main.d.ts",
   "repository": {
