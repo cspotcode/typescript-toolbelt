@@ -5,6 +5,6 @@
 * Adds MIT license.
 * Adds `StringKeyOf<T>`, like `keyof` but returns only the strings.
 
-# v0.0.3
+# v0.0.3 ,v0.0.2, v0.0.1
 
-* Initial release
+* Initial releases
