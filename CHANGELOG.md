@@ -1,6 +1,6 @@
 # vnext
 
-* 
+* Fixes `/// <reference types="typescript-toolbelt/namespace" />` and `/// <reference types="typescript-toolbelt/global" />`.  They should now work as described in the README.
 
 # v0.0.4
 
