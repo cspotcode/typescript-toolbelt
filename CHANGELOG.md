@@ -1,4 +1,4 @@
-# vnext
+# v0.0.5
 
 * Fixes `/// <reference types="typescript-toolbelt/namespace" />` and `/// <reference types="typescript-toolbelt/global" />`.  They should now work as described in the README.
 * Upgrades to TypeScript 3.0
