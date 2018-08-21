@@ -38,7 +38,7 @@
     "tslint": "^5.10.0",
     "tslint-language-service": "^0.9.9",
     "typedoc": "^0.11.1",
-    "typescript": "^2.9.1"
+    "typescript": "^3.0.1"
   },
   "files": [
     "global.d.ts",
